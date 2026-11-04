@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ìbejì — link two Macs into one trusted pair</title>
+<meta name="description" content="Ìbejì links exactly two of your own Macs over the LAN: shared folders, remote port tunnels, file drop, and a CLI, HTTP API and MCP surface so you and your agents can work across both machines. No accounts, no cloud, no relay.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ìbejì — link two Macs into one trusted pair">
+<meta property="og:description" content="Edit on the Laptop. Run on the Desktop. LAN-only, no accounts, no cloud. Install with one command.">
+<meta property="og:url" content="https://ibeji.dev/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='11' cy='16' r='7' fill='none' stroke='%231B6B72' stroke-width='2.5'/%3E%3Ccircle cx='21' cy='16' r='7' fill='none' stroke='%231B6B72' stroke-width='2.5'/%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="styles/_foundation.css">
+<link rel="stylesheet" href="styles/_components.css">
+<link rel="stylesheet" href="styles/site.css">
+
+<link rel="alternate" type="text/markdown" href="/ibeji.md" title="Ìbejì for agents">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="11" cy="16" r="7.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        <circle cx="21" cy="16" r="7.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+      </svg>
+      Ìbejì
+    </a>
+    <nav class="nav-links">
+      <a href="#what" class="hide-sm">What it does</a>
+      <a href="#demo" class="hide-sm">Demo</a>
+      <a href="#agents" class="hide-sm">For agents</a>
+      <a href="#faq" class="hide-sm">FAQ</a>
+      <a href="#install" class="nav-cta">Install</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ------------------------------------------------------------- hero -- -->
+<section class="hero">
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span> v0.1.3 · macOS · free &amp; open source</span>
+
+    <h1>Two Macs, working as one pair.</h1>
+
+    <p class="lede">
+      You edit on the Laptop. The build runs on the Desktop, where the
+      credentials and the VPN live. Ìbejì links exactly two of your own Macs
+      over the LAN — shared folders, port tunnels, file drop, and a CLI, HTTP
+      API and MCP surface your coding agents can drive.
+    </p>
+
+    <div class="install" id="install-top">
+      <code><span class="prompt">$</span><span id="cmd-top">curl -fsSL https://raw.githubusercontent.com/spiderocious/ibeji/main/scripts/install.sh | sh</span></code>
+      <button class="copy-btn" data-copy="#cmd-top">Copy</button>
+    </div>
+
+    <p class="hero-note">
+      One command, on each Mac. It installs the app, starts the background
+      daemon at login and puts <code>ibeji</code> on your PATH.
+    </p>
+
+    <div class="cta-row">
+      <a class="lnk" href="#install">All downloads</a>
+      <a class="lnk" href="#agents">Let an agent install it</a>
+      <a class="lnk" href="https://github.com/spiderocious/ibeji">Source on GitHub</a>
+    </div>
+
+    <div class="hero-shot rise">
+      <div class="shot-frame">
+        <div class="shot-bar"><i></i><i></i><i></i><span class="ttl">Ìbejì — Laptop</span></div>
+        <img src="shots/devices.png" width="2360" height="796"
+             alt="The Ìbejì window on a Mac named Laptop, showing its paired device Desktop as live, in Bypass mode, with the device's address and key fingerprint." />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------ strip -- -->
+<section>
+  <div class="wrap">
+    <dl class="strip rise">
+      <div><dt>Network</dt><dd><b>LAN only.</b> No accounts, no cloud, no relay.</dd></div>
+      <div><dt>Devices</dt><dd><b>Exactly two.</b> One trusted pair, pinned by key.</dd></div>
+      <div><dt>Platform</dt><dd><b>macOS.</b> launchd, keychain, your login shell.</dd></div>
+      <div><dt>Licence</dt><dd><b>Open source.</b> Read every line on GitHub.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- --------------------------------------------------------- the thing -- -->
+<section id="what">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">The thing it is for</p>
+      <h2>Move the work, not the network.</h2>
+      <p class="lede">
+        Anyone with two machines knows the shape of it. You edit on the one with
+        your setup, and the thing you are editing can only build, run or deploy
+        on the other — because that is where the credentials live, or the
+        toolchain, or the GPU. So you SSH in and lose your editor, or you copy
+        files by hand and lose track of which copy is real.
+      </p>
+    </div>
+
+    <div class="install rise" style="max-width:none">
+      <code><span class="prompt">$</span><span id="cmd-run">ibeji run desktop --cwd ~/projects/atlas --after-sync atlas -- git push</span></code>
+      <button class="copy-btn" data-copy="#cmd-run">Copy</button>
+    </div>
+
+    <p class="shot-cap rise" style="margin-top:14px">
+      The push leaves from the Desktop, with the Desktop's credentials on the
+      Desktop's VPN. <b>--after-sync</b> waits for your last save to land first,
+      so the commit never captures a half-synced tree.
+    </p>
+  </div>
+</section>
+
+<!-- --------------------------------------------------------- features -- -->
+<section>
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">What it does</p>
+      <h2>Nine things, one link.</h2>
+    </div>
+
+    <div class="feats">
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="12" r="5.2"/><circle cx="16" cy="12" r="5.2"/></svg></div>
+        <h3>Pair once</h3>
+        <p>Both Macs find each other over mDNS, or you type an IP. Compare six
+        digits, confirm on both, and each pins the other's key. It never asks
+        again.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h7l2 2h9v10H3z"/><path d="M7 13h10"/></svg></div>
+        <h3>Shared spaces</h3>
+        <p>Pick a folder, invite the other Mac. Real files on both disks, not a
+        network mount. One side is master, and master wins — the other version
+        is kept beside it as a conflict copy, never dropped.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14"/><path d="M14 7l5 5-5 5"/><rect x="2" y="8" width="4" height="8" rx="1"/></svg></div>
+        <h3>Port Lens</h3>
+        <p>See every listening port on both machines, labelled where we can
+        recognise it. Click one and a tunnel opens: a server bound to
+        <code>127.0.0.1</code> over there answers on your localhost here.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg></div>
+        <h3>Run things over there</h3>
+        <p>Commands run in your real login shell, so nvm, pnpm, homebrew and
+        git's credential helper are all on PATH. Output streams back live and
+        the exit code is the one you'd have got standing at the machine.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg></div>
+        <h3>Trace everything</h3>
+        <p>Every call the daemon handled, with payloads, durations and the
+        failures filtered on their own. When something misbehaves,
+        <code>ibeji trace</code> tells you what actually happened.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 19h16"/></svg></div>
+        <h3>Drop files across</h3>
+        <p>Send files or folders straight to the other Mac's inbox. Turn on
+        clipboard sync and what you copy here pastes there within a second.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 4v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>You approve the writes</h3>
+        <p>In Prompt mode every command and every write asks first, naming the
+        machine and the exact command. Approve one repeatedly and you can
+        remember the rule — the same command, the same folder, no more asking.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1.4"/><rect x="14" y="3" width="7" height="7" rx="1.4"/><rect x="3" y="14" width="7" height="7" rx="1.4"/><path d="M14 17.5h7M17.5 14v7"/></svg></div>
+        <h3>Built for agents</h3>
+        <p>An MCP server ships with the app. Your coding agent can list, read,
+        grep, write and run on the other machine — through the same permission
+        gate you use, with the same trace behind it.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+        <h3>Tells you when it breaks</h3>
+        <p><code>ibeji doctor</code> runs six checks — daemon, keychain, token,
+        mDNS, link, login shell — and each failure names its own fix instead of
+        leaving you guessing.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------- demo -- -->
+<section id="demo">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">Try it here</p>
+      <h2>Do something on one side. Watch the other.</h2>
+      <p class="lede">
+        Press a button on either Mac below and watch the other one answer. This
+        is a walkthrough built into the page, following what really happens over
+        the link.
+      </p>
+    </div>
+
+    <div class="demo rise">
+      <div class="demo-grid">
+
+        <!-- LEFT: the Laptop -->
+        <div class="demo-pane" id="pane-laptop">
+          <div class="pane-head">
+            <div>
+              <div class="pane-name">Laptop</div>
+              <div class="pane-sub">192.168.1.35 · you are here</div>
+            </div>
+            <span class="pill"><span class="dot"></span>LIVE</span>
+          </div>
+
+          <p class="pane-sub" style="margin:0 0 10px">~/projects/atlas</p>
+          <div class="files" id="files-laptop"></div>
+
+          <div class="demo-actions">
+            <button class="act" data-do="edit">
+              <svg class="act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>
+              Save a change to <code>index.ts</code>
+              <span class="k">syncs across</span>
+            </button>
+            <button class="act" data-do="push">
+              <svg class="act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>
+              Run <code>git push</code> on Desktop
+              <span class="k">--after-sync</span>
+            </button>
+            <button class="act" data-do="tunnel">
+              <svg class="act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16"/><path d="M15 7l5 5-5 5"/></svg>
+              Open Desktop's port 3000
+              <span class="k">tunnel</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT: the Desktop -->
+        <div class="demo-pane is-machine" id="pane-desktop">
+          <div class="pane-head">
+            <div>
+              <div class="pane-name">Desktop</div>
+              <div class="pane-sub">192.168.1.39 · the other Mac</div>
+            </div>
+            <span class="pill"><span class="dot"></span>LIVE</span>
+          </div>
+
+          <p class="pane-sub" style="margin:0 0 10px">daemon log</p>
+          <pre class="demo-log" id="log" aria-live="polite" aria-label="Desktop daemon log"></pre>
+
+          <div class="demo-actions" style="margin-top:16px">
+            <button class="act" data-do="drop">
+              <svg class="act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 19h16"/></svg>
+              Drop <code>build.zip</code> to Laptop
+              <span class="k">file drop</span>
+            </button>
+            <button class="act" data-do="clip">
+              <svg class="act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M10 4h4"/></svg>
+              Copy a snippet here
+              <span class="k">clipboard</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="demo-foot">
+        <span id="demo-hint">Pick an action on either side.</span>
+        <button class="reset-btn" id="reset">Reset the demo</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------- screenshots -- -->
+<section>
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">The real window</p>
+      <h2>Plain, quiet, and it tells you the truth.</h2>
+      <p class="lede">
+        This is the whole app. Four tabs, no sidebar, no dashboard — the
+        addresses, the ports and the sync state are on screen where you can
+        read them.
+      </p>
+    </div>
+
+    <div class="shots-row">
+      <div class="rise">
+        <div class="shot-frame">
+          <div class="shot-bar"><i></i><i></i><i></i><span class="ttl">Ports</span></div>
+          <img src="shots/ports.png" width="2360" height="1720" loading="lazy"
+               alt="The Ports tab listing ports on both machines — ARDAgent on 3283, MySQL on 3306, a dev server on 5000, adb on 5037, node on 5174 — each remote row offering a Link button to open a tunnel." />
+        </div>
+        <p class="shot-cap"><b>Port Lens.</b> Both machines' listening ports in
+        one list. <b>Link</b> opens a tunnel; <b>here</b> means it is already
+        yours.</p>
+      </div>
+
+      <div class="rise">
+        <div class="shot-frame">
+          <div class="shot-bar"><i></i><i></i><i></i><span class="ttl">Trace</span></div>
+          <img src="shots/trace.png" width="2360" height="1720" loading="lazy"
+               alt="The Trace tab showing timestamped daemon events — api.pair.start, api.pair.confirm, api.spaces.create and three api.exec calls with durations — and a filter toggle between Everything and Failures only." />
+        </div>
+        <p class="shot-cap"><b>Trace.</b> What the daemon did, with durations.
+        <b>Failures only</b> is the first thing to press when something is
+        wrong.</p>
+      </div>
+
+      <div class="rise">
+        <div class="shot-frame">
+          <div class="shot-bar"><i></i><i></i><i></i><span class="ttl">Spaces</span></div>
+          <img src="shots/spaces.png" width="2360" height="619" loading="lazy"
+               alt="The Spaces tab showing a shared space named atlas marked IN-SYNC, with its folder path and a line reading master, 2 files, 25 B." />
+        </div>
+        <p class="shot-cap"><b>Spaces.</b> A folder on both disks, its role, and
+        whether it has caught up.</p>
+      </div>
+
+      <div class="rise">
+        <div class="shot-frame">
+          <div class="shot-bar"><i></i><i></i><i></i><span class="ttl">Devices</span></div>
+          <img src="shots/devices.png" width="2360" height="796" loading="lazy"
+               alt="The Devices tab showing the paired device Desktop at 127.0.0.1:19902, marked LIVE and in Bypass mode, with Switch to Prompt and Unpair actions." />
+        </div>
+        <p class="shot-cap"><b>Devices.</b> The pair, its address, its mode. The
+        IP is always on screen, never behind a detail view.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------------------------------------------------- security -- -->
+<section>
+  <div class="wrap">
+    <div class="split rise">
+      <div>
+        <p class="eyebrow">Where it stops</p>
+        <h2>It never bridges your networks.</h2>
+        <p>
+          Ìbejì does not make one machine a gateway for the other, does not
+          enable IP forwarding, and does not route the other machine's traffic
+          through any tunnel. That is a permanent exclusion, not a thing we
+          haven't got to yet.
+        </p>
+        <ul class="ticks">
+          <li>It would not work anyway — what gates a protected resource is
+          rarely the source IP, but a posture agent, a browser session or a
+          hardware key.</li>
+          <li>That is a VPN's job, and WireGuard and Tailscale do it well, one
+          layer down.</li>
+          <li>Moving the work beats moving the network: access stays on one
+          machine, and what crosses the LAN is a command, a tunnel or a URL.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="shot-frame">
+          <div class="shot-bar"><i></i><i></i><i></i><span class="ttl">ibeji doctor</span></div>
+          <pre class="demo-log" style="height:auto;border-radius:0;padding:20px 22px">✓ LaunchAgent    loaded, pid 15218
+✓ Keychain       reachable
+✓ API token      valid · http://127.0.0.1:52963
+✓ mDNS           advertising and browsing
+✓ Link           Desktop · live · 192.168.1.39
+✓ Login shell    zsh provides 7 of the 7 common tools</pre>
+        </div>
+        <p class="shot-cap">Six checks. Each failure names its own fix.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------ agents -- -->
+<section id="agents">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">For agents</p>
+      <h2>Hand this to your coding agent.</h2>
+      <p class="lede">
+        Paste the prompt below into Claude Code, Cursor or any agent with shell
+        access, and it will install Ìbejì on the machine it is running on, check
+        the install, and tell you what to do on the second Mac.
+      </p>
+    </div>
+
+    <div class="prompt-box rise">
+      <div class="prompt-head">
+        <span>Installation prompt</span>
+        <button class="btn-sm" data-copy="#agent-prompt">Copy prompt</button>
+      </div>
+      <pre class="prompt-text" id="agent-prompt">Install Ìbejì on this Mac. It is a LAN-only tool that pairs two Macs so one can run commands, share folders and tunnel ports to the other.
+
+1. Run this, which installs the app, the background daemon and the CLI:
+
+   curl -fsSL https://raw.githubusercontent.com/spiderocious/ibeji/main/scripts/install.sh | sh
+
+2. Verify it with `ibeji doctor`. Every line should be a ✓ except "Link",
+   which will say no device is paired yet. If a check fails, the failure
+   names its own fix — apply it and run doctor again.
+
+3. Tell me this Mac's name and LAN address by running `ibeji devices`,
+   and remind me to run the same install command on my second Mac.
+
+Do not try to pair the machines yourself: pairing needs a human to compare
+six digits on both screens at once.
+
+Notes:
+- macOS only. It uses launchd, the macOS keychain and the zsh login shell.
+- Nothing touches the internet. Both Macs must be on the same LAN.
+- Full reference for agents: https://ibeji.dev/ibeji.md</pre>
+    </div>
+
+    <div class="split rise" style="margin-top:56px">
+      <div>
+        <h3>An MCP server ships with it</h3>
+        <p>
+          Once two Macs are paired, your agent can treat the other one as
+          extended workspace: <code>list_remote_dir</code>,
+          <code>read_remote_file</code>, <code>search_remote_files</code>,
+          <code>run_remote_command</code>, <code>open_tunnel</code>,
+          <code>wait_for_sync</code> and the rest — each gated by the same
+          permission mode you set, each recorded in the same trace.
+        </p>
+      </div>
+      <div>
+        <div class="install" style="max-width:none">
+          <code><span class="prompt">$</span><span id="cmd-md">curl https://ibeji.dev/ibeji.md</span></code>
+          <button class="copy-btn" data-copy="#cmd-md">Copy</button>
+        </div>
+        <p class="shot-cap" style="margin-top:12px">
+          <a href="/ibeji.md">/ibeji.md</a> is this whole site as Markdown,
+          written for agents rather than people — commands, flags, the
+          permission model and the failure modes, with none of the pictures.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- -------------------------------------------------------- what you need -->
+<section>
+  <div class="wrap">
+    <div class="split rise">
+      <div>
+        <p class="eyebrow">What you need</p>
+        <h2>Two Macs and one network.</h2>
+        <ul class="ticks">
+          <li><b>Two Macs.</b> Apple silicon or Intel, macOS 12 or later.</li>
+          <li><b>The same LAN.</b> Both on one network, with multicast for
+          automatic discovery — or add the other by IP when it is blocked.</li>
+          <li><b>No account.</b> There is nothing to sign up for and nothing to
+          pay.</li>
+          <li><b>Not Windows or Linux.</b> The daemon is built on launchd, the
+          macOS keychain and a zsh login shell.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Set it up</p>
+        <h2 style="font-size:26px">Three steps.</h2>
+        <ul class="ticks">
+          <li><b>Install on both.</b> Run the one-line command on each Mac.</li>
+          <li><b>Pair once.</b> Open Ìbejì on both. They find each other, or you
+          type the address the window shows. Compare six digits and confirm on
+          both screens.</li>
+          <li><b>Name them.</b> "Laptop" and "Desktop" are enough. From then on
+          every feature runs over that link.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- --------------------------------------------------------- downloads -- -->
+<section id="install">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">Install</p>
+      <h2>One command, on each Mac.</h2>
+      <p class="lede">
+        This is the path we test and the one we recommend. It picks the right
+        build for your chip, checks the download against its published
+        checksum, installs the app, starts the daemon at login and links the
+        CLI.
+      </p>
+    </div>
+
+    <div class="install rise" style="max-width:none">
+      <code><span class="prompt">$</span><span id="cmd-main">curl -fsSL https://raw.githubusercontent.com/spiderocious/ibeji/main/scripts/install.sh | sh</span></code>
+      <button class="copy-btn" data-copy="#cmd-main">Copy</button>
+    </div>
+
+    <p class="shot-cap rise" style="margin:16px 0 40px">
+      Already have it? The same command checks your version first and asks
+      before reinstalling. <code>--force</code> skips the question.
+    </p>
+
+    <div class="tbl-scroll rise">
+      <table class="dl-table">
+        <thead>
+          <tr><th>Build</th><th>File</th><th>For</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>App · Apple silicon</td>
+            <td class="mono">Ibeji-0.1.3-arm64.dmg</td>
+            <td>M1 and later</td>
+            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/Ibeji-0.1.3-arm64.dmg">Download</a></td>
+          </tr>
+          <tr>
+            <td>App · Intel</td>
+            <td class="mono">Ibeji-0.1.3.dmg</td>
+            <td>Intel Macs</td>
+            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/Ibeji-0.1.3.dmg">Download</a></td>
+          </tr>
+          <tr>
+            <td>CLI only · Apple silicon</td>
+            <td class="mono">ibeji-cli-0.1.3-darwin-arm64.tar.gz</td>
+            <td>Headless use</td>
+            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/ibeji-cli-0.1.3-darwin-arm64.tar.gz">Download</a></td>
+          </tr>
+          <tr>
+            <td>CLI only · Intel</td>
+            <td class="mono">ibeji-cli-0.1.3-darwin-x64.tar.gz</td>
+            <td>Headless use</td>
+            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/ibeji-cli-0.1.3-darwin-x64.tar.gz">Download</a></td>
+          </tr>
+          <tr>
+            <td>Checksums</td>
+            <td class="mono">SHA256SUMS.txt</td>
+            <td>Verify a download</td>
+            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/SHA256SUMS.txt">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="shot-cap rise" style="margin-top:18px">
+      A DMG downloaded in a browser is quarantined by macOS and needs
+      <code>xattr -dr com.apple.quarantine /Applications/Ibeji.app</code> once
+      after installing. The curl command above avoids that entirely, because
+      curl does not set the quarantine flag.
+    </p>
+  </div>
+</section>
+
+<!-- -------------------------------------------------------------- FAQ -- -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">Questions</p>
+      <h2>FAQ</h2>
+    </div>
+
+    <div class="faq rise">
+
+      <details class="qa">
+        <summary>Does any of this go over the internet?</summary>
+        <div class="qa-body">
+          <p>No. There are no accounts, no cloud, no relay and no web app. The
+          two daemons talk directly to each other over your LAN. If the machines
+          are not on the same network, Ìbejì does nothing — there is no
+          store-and-forward and nothing queues in a server somewhere.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Is it really macOS only?</summary>
+        <div class="qa-body">
+          <p>Yes, and not as a temporary limitation. The daemon runs as a
+          launchd LaunchAgent, stores its keys in the macOS keychain, enumerates
+          ports with the system's own tooling and runs commands in your zsh
+          login shell. A Windows or Linux build would be a rewrite of those four
+          subsystems, not a build flag. Both machines must be Macs.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Why only two devices?</summary>
+        <div class="qa-body">
+          <p>Because the trust unit is a pair, and a pair is simple enough to
+          reason about: one pinned key each, one permission mode per direction,
+          one link. A mesh of three or more changes the security model and most
+          of the UI with it. It is deferred, not forgotten.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>What can the other machine actually do to mine?</summary>
+        <div class="qa-body">
+          <p>That depends on the mode you set, and the honest answer has a sharp
+          edge to it.</p>
+          <p><b>Writes and commands</b> are gated. In Prompt mode — the default
+          — every command, every file write and every app launch asks you first,
+          naming the machine and the exact command. You can remember a rule for
+          one exact command in one folder, so <code>git push</code> in a repo you
+          approve once stops asking. In Bypass mode they run without asking.</p>
+          <p><b>Reads are not gated in v1.</b> A paired device can read and grep
+          anything your user account can, including <code>~/.ssh</code> and
+          <code>~/.aws</code>. Prompting on every read would make the agent
+          surface unusable, so the trade is stated plainly rather than hidden:
+          in Prompt mode the other machine cannot run anything, but it can read
+          everything. Pair only with a machine you fully trust. Path-scoped
+          rules are the v2 answer.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>What happens when the same file changes on both machines?</summary>
+        <div class="qa-body">
+          <p>The master's version wins, and the replica's version is kept beside
+          it as a conflict copy — <code>report.conflict-from-laptop.md</code> —
+          never silently discarded. The conflict shows up in the space's
+          activity feed, and from either machine you can promote the conflict
+          copy over the master's version or discard it.</p>
+          <p>For a code repository, make the master the machine that owns the
+          git credentials. That makes master-wins the right outcome: a
+          <code>git pull</code> on the master beats an unsynced edit on the
+          replica.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Does it sync my <code>.git</code> folder?</summary>
+        <div class="qa-body">
+          <p>No, and it argues with you if you try. Syncing <code>.git</code>
+          across two machines corrupts repositories through
+          <code>index.lock</code> races and half-written objects, and it defeats
+          the pattern the whole product is built on: sync the working tree, run
+          git on the machine that owns the credentials. <code>node_modules/</code>,
+          build output and <code>.DS_Store</code> are ignored by default too,
+          and a folder with a <code>.gitignore</code> can import its patterns.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Will it route my VPN to the other machine?</summary>
+        <div class="qa-body">
+          <p>Never. Ìbejì does not bridge networks, enable IP forwarding or
+          route one machine's traffic through the other. What crosses the LAN is
+          a command, a tunnel to a <code>localhost</code> port, or a URL — so
+          <code>git push</code> leaves from the machine that holds the
+          credentials, on that machine's VPN.</p>
+          <p>The one case this genuinely cannot serve is a tool running locally
+          that needs routed access to a host only the other machine can reach. A
+          tunnel covers most of it, because it reaches whatever that machine
+          reaches on its own loopback. Where it does not, run the tool on the
+          other machine and tunnel its port.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>macOS says the app is damaged, or can't be verified.</summary>
+        <div class="qa-body">
+          <p>Install with the curl command and you will not see either dialog —
+          curl does not set the quarantine flag that triggers them, browsers do.</p>
+          <p>If you downloaded a DMG by hand, run
+          <code>xattr -dr com.apple.quarantine /Applications/Ibeji.app</code>
+          once. The app is ad-hoc signed but not notarized, which needs a paid
+          Apple Developer account.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>The two Macs cannot find each other.</summary>
+        <div class="qa-body">
+          <p>Multicast is often blocked on corporate and guest Wi-Fi, which is
+          what mDNS discovery needs. The window shows this Mac's own address for
+          exactly this reason: read it off one screen, press <b>Add by IP
+          address</b> on the other, and type it in. Manual entry is a first-class
+          path, not a fallback.</p>
+          <p>Both daemons listen on TCP port 7749. Check they are both running
+          with <code>ibeji doctor</code>.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Do I need the window open?</summary>
+        <div class="qa-body">
+          <p>No. The daemon starts at login and runs in the background; closing
+          the window does not drop the link, and the CLI and MCP server keep
+          working. The window is one client of the daemon's local API, the same
+          as the others.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>What happens if I unpair?</summary>
+        <div class="qa-body">
+          <p>The pinned key is revoked immediately and every active tunnel, sync
+          and session closes with it. The other machine cannot reconnect — it
+          will show as unreachable rather than quietly walking back in. Files
+          already synced to each disk stay where they are.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>How do I update?</summary>
+        <div class="qa-body">
+          <p>The app checks for new releases and tells you when one exists, with
+          a button that re-runs the installer for you. You can also just run the
+          curl command again at any time — it compares your installed version
+          first and asks before reinstalling the same one.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Is it finished?</summary>
+        <div class="qa-body">
+          <p>No. It is v0.1.3 and it is young — the version number is honest
+          about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP
+          server all work, and every release is tested by pairing two machines
+          and running the whole flow. Expect rough edges, and expect them to be
+          fixed in the open.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>How much does it cost?</summary>
+        <div class="qa-body">
+          <p>Nothing. It is free and open source, there is no account, no
+          subscription and no paid tier. The source is on GitHub and you can
+          read every line of what runs on your machines.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-in">
+      <a class="brand" href="/">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="11" cy="16" r="7.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="21" cy="16" r="7.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        </svg>
+        Ìbejì
+      </a>
+      <div class="foot-links">
+        <a href="#what">What it does</a>
+        <a href="#demo">Demo</a>
+        <a href="#install">Install</a>
+        <a href="#faq">FAQ</a>
+        <a href="/ibeji.md">For agents</a>
+        <a href="https://github.com/spiderocious/ibeji">GitHub</a>
+      </div>
+    </div>
+    <p class="foot-note">
+      <i>Ìbejì</i> (ee-BAY-jee) is Yoruba for <b>twins</b> — two machines acting
+      as one pair. Free and open source. LAN only: nothing here touches the
+      internet.
+    </p>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
