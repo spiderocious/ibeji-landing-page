@@ -1,0 +1,134 @@
+<!doctype html>
+<!--
+  The source for og-card.png (1200x630), rendered once and committed.
+
+  Kept in the repo rather than hand-drawn in an image editor so the card stays
+  on the product's own tokens: if the design system moves, re-render rather
+  than redraw. Render with tools/render-og.js.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../public/styles/_foundation.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: 1200px; height: 630px;
+    background: var(--paper-200);
+    font-family: var(--font-chrome);
+    color: var(--ink-900);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* A faint rule grid, like paper. */
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--paper-400) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-400) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: .5;
+  }
+
+  .in {
+    position: relative;
+    padding: 82px 86px;
+    height: 630px;
+    box-sizing: border-box;
+    display: flex; flex-direction: column;
+  }
+
+  .top { display: flex; align-items: center; gap: 16px; }
+
+  .mark { width: 52px; height: 52px; color: var(--sea-600); }
+
+  .name {
+    font-family: var(--font-territory);
+    font-size: 40px; font-weight: 600;
+    letter-spacing: -.01em;
+  }
+
+  .badge {
+    margin-left: auto;
+    font-family: var(--font-record);
+    font-size: 19px;
+    color: var(--sea-800);
+    background: var(--sea-50);
+    border: 1px solid var(--sea-100);
+    padding: 9px 20px; border-radius: 999px;
+  }
+
+  h1 {
+    font-family: var(--font-territory);
+    font-size: 78px;
+    line-height: 1.04;
+    letter-spacing: -.026em;
+    font-weight: 600;
+    margin: 60px 0 0;
+    max-width: 16ch;
+  }
+
+  p.sub {
+    font-size: 27px;
+    line-height: 1.45;
+    color: var(--ink-600);
+    margin: 26px 0 0;
+    max-width: 30ch;
+  }
+
+  .cmd {
+    margin-top: auto;
+    background: var(--ink-900);
+    border-radius: 12px;
+    padding: 22px 28px;
+    font-family: var(--font-record);
+    font-size: 18px;
+    color: #E8EDEC;
+    display: flex; align-items: center; gap: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .cmd .p { color: var(--sea-300); }
+
+  /* The pair, drawn large and quiet in the corner. */
+  .pair {
+    position: absolute;
+    right: -70px; bottom: -92px;
+    width: 470px; height: 470px;
+    color: var(--sea-600);
+    opacity: .085;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+
+  <svg class="pair" viewBox="0 0 32 32" aria-hidden="true">
+    <circle cx="11" cy="16" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <circle cx="21" cy="16" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  </svg>
+
+  <div class="in">
+    <div class="top">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="11" cy="16" r="7.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        <circle cx="21" cy="16" r="7.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+      </svg>
+      <span class="name">Ìbejì</span>
+      <span class="badge">macOS · free &amp; open source</span>
+    </div>
+
+    <h1>Two Macs, working as one pair.</h1>
+
+    <p class="sub">
+      Edit on the Laptop. Run on the Desktop. LAN only — no accounts, no cloud.
+    </p>
+
+    <div class="cmd">
+      <span class="p">$</span>
+      <span>curl -fsSL raw.githubusercontent.com/spiderocious/ibeji/main/scripts/install.sh | sh</span>
+    </div>
+  </div>
+</body>
+</html>

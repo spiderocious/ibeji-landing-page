@@ -5,7 +5,7 @@ Once paired, either machine can run commands on the other, share folders, tunnel
 localhost ports, and drop files across — through a CLI, a local HTTP API, and an
 MCP server.
 
-This file is the agent-facing version of <https://ibeji.dev>. It is the one to
+This file is the agent-facing version of <https://ibeji.devferanmi.xyz>. It is the one to
 read if you are an AI agent installing, operating or debugging Ìbejì.
 
 - Source: <https://github.com/spiderocious/ibeji>

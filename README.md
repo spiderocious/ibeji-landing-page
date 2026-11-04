@@ -6,17 +6,50 @@ tool that links two Macs into one trusted pair.
 Three static files and a folder of images. No build step, no dependencies, no
 framework: deploy `public/` to anything that serves a directory.
 
+Live at **<https://ibeji.devferanmi.xyz>**.
+
 ```
 public/
   index.html          the page
   site.js             copy buttons, scroll reveals, the demo
   ibeji.md            the same site as Markdown, written for AI agents
+  og-card.png         1200x630 social card, rendered from tools/og-card.html
+  sitemap.xml         two URLs: the page and ibeji.md
+  robots.txt          everything allowed, points at the sitemap
   styles/
     _foundation.css   vendored from the app — tokens, type, motion
     _components.css   vendored from the app — components
     site.css          the page's own chrome
   shots/              screenshots of the real app
+tools/
+  og-card.html        the social card's source
+  render-og.js        renders it to public/og-card.png
 ```
+
+## SEO
+
+The canonical URL is `https://ibeji.devferanmi.xyz/`. It appears in the
+canonical link, the Open Graph and Twitter tags, the structured data, the
+sitemap and robots.txt. **If the domain moves, change it in all of them** —
+grep for `devferanmi` to find every one.
+
+Two JSON-LD blocks sit in `<head>`: a `SoftwareApplication` describing the
+product, and a `FAQPage` built from the page's own FAQ. The FAQ block is
+**generated from the markup**, not written by hand, because Google penalises
+structured data that disagrees with visible content and a hand-kept copy drifts
+the first time a question is edited. If you add or edit an FAQ entry,
+regenerate it rather than patching the JSON.
+
+The social card is rendered, not drawn:
+
+```sh
+ELECTRON_RUN_AS_NODE= \
+  ../ibeji/app/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron \
+  tools/render-og.js
+```
+
+That keeps the card on the product's own tokens — if the design system moves,
+re-render rather than redraw.
 
 ## Running it locally
 

@@ -1,0 +1,9 @@
+# Ìbejì — https://ibeji.devferanmi.xyz
+#
+# Everything here is public documentation for a free, open-source tool, so
+# every crawler is welcome, including the ones that train and answer with it.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://ibeji.devferanmi.xyz/sitemap.xml
