@@ -9,7 +9,7 @@ This file is the agent-facing version of <https://ibeji.devferanmi.xyz>. It is t
 read if you are an AI agent installing, operating or debugging Ìbejì.
 
 - Source: <https://github.com/spiderocious/ibeji>
-- Current version: **v0.1.5**
+- Current version: **v0.1.6**
 - Platform: **macOS only** (both machines)
 - Network: **LAN only** — no accounts, no cloud, no relay, no internet traffic
 
@@ -65,7 +65,7 @@ Pairing requires someone to compare six digits on two screens at once. **Do not
 attempt to automate it**: the comparison is what proves no machine in the middle
 substituted its own key.
 
-From the terminal (v0.1.5 and later), on the first Mac:
+From the terminal (v0.1.6 and later), on the first Mac:
 
 ```sh
 ibeji pair                      # what is on the LAN, and this Mac's address
@@ -305,9 +305,20 @@ Linux (launchd, keychain, zsh login shell), and anything over the internet.
 ## Debugging, in order
 
 1. `ibeji doctor` — six checks; each failure names its own fix.
-2. `ibeji trace --errors --since 30m` — the failures with their payloads.
+2. `ibeji trace --errors --since 30m` — the failures with their payloads and,
+   since v0.1.6, the underlying cause rather than just the mapped code. A
+   `peer_offline` now carries the reason it could not connect — a refused
+   dial, a timeout and a failed TLS handshake look different and need
+   different answers.
 3. `ibeji devices` — is the peer `live` or `unreachable`?
 4. `ibeji check <device> <url>` — whose network is actually broken?
+
+The daemon log carries the cause of every failed API call since v0.1.6:
+
+```
+WARN api: request failed route="POST /v1/pair/start" code=peer_offline
+     cause="link: peer is not reachable: 192.168.1.147:7749: connect: no route to host"
+```
 
 Daemon logs:
 
@@ -324,6 +335,8 @@ Common states:
 | `timed_out` on exec | Nobody answered the prompt within 60s on the far machine |
 | `declined` on exec | A human declined it; do not retry silently |
 | Device shows `unreachable` | Peer asleep, off the LAN, or daemon stopped |
+| Paired yesterday, unpaired today | Pre-v0.1.6: the pin was never written to disk. Update both Macs and pair once more |
+| `no route to host` in the cause | Stale route, usually after the peer changed address or the Wi-Fi reassociated |
 | "Ibeji is damaged" | Quarantined download; see the `xattr` command above |
 | Key mismatch | The peer's identity changed — the pair must be re-made by a human |
 
