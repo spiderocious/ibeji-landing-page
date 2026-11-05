@@ -692,3 +692,25 @@ code, kbd, samp, .mono { font-family: var(--font-record); }
   margin: 12px 2px 0;
 }
 .shot-cap b { color: var(--text-secondary); font-weight: 600; }
+
+/* The install section's prose, in place of the download table that used to
+   sit here. Installing is one command; a table of files invited the browser
+   download the command exists to avoid. */
+.install-notes {
+  max-width: 62ch;
+  margin-top: 28px;
+}
+.install-notes p {
+  font-size: 14.5px;
+  line-height: 1.68;
+  color: var(--text-secondary);
+  margin: 0 0 14px;
+}
+.install-notes p:last-child { margin-bottom: 0; }
+.install-notes code {
+  font-size: 12.5px;
+  background: var(--surface-inset);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ink-800);
+}

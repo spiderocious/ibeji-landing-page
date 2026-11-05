@@ -58,7 +58,7 @@
   "operatingSystem": "macOS 12 or later",
   "softwareVersion": "0.1.5",
   "url": "https://ibeji.devferanmi.xyz/",
-  "downloadUrl": "https://github.com/spiderocious/ibeji/releases/latest",
+  "downloadUrl": "https://ibeji.devferanmi.xyz/#install",
   "installUrl": "https://ibeji.devferanmi.xyz/#install",
   "codeRepository": "https://github.com/spiderocious/ibeji",
   "license": "https://github.com/spiderocious/ibeji",
@@ -264,7 +264,7 @@
     </p>
 
     <div class="cta-row">
-      <a class="lnk" href="#install">All downloads</a>
+      <a class="lnk" href="#install">How it installs</a>
       <a class="lnk" href="#agents">Let an agent install it</a>
       <a class="lnk" href="https://github.com/spiderocious/ibeji">Source on GitHub</a>
     </div>
@@ -720,52 +720,25 @@ Notes:
       before reinstalling. <code>--force</code> skips the question.
     </p>
 
-    <div class="tbl-scroll rise">
-      <table class="dl-table">
-        <thead>
-          <tr><th>Build</th><th>File</th><th>For</th><th></th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>App · Apple silicon</td>
-            <td class="mono">Ibeji-0.1.5-arm64.dmg</td>
-            <td>M1 and later</td>
-            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/Ibeji-0.1.5-arm64.dmg">Download</a></td>
-          </tr>
-          <tr>
-            <td>App · Intel</td>
-            <td class="mono">Ibeji-0.1.5.dmg</td>
-            <td>Intel Macs</td>
-            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/Ibeji-0.1.5.dmg">Download</a></td>
-          </tr>
-          <tr>
-            <td>CLI only · Apple silicon</td>
-            <td class="mono">ibeji-cli-0.1.5-darwin-arm64.tar.gz</td>
-            <td>Headless use</td>
-            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/ibeji-cli-0.1.5-darwin-arm64.tar.gz">Download</a></td>
-          </tr>
-          <tr>
-            <td>CLI only · Intel</td>
-            <td class="mono">ibeji-cli-0.1.5-darwin-x64.tar.gz</td>
-            <td>Headless use</td>
-            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/ibeji-cli-0.1.5-darwin-x64.tar.gz">Download</a></td>
-          </tr>
-          <tr>
-            <td>Checksums</td>
-            <td class="mono">SHA256SUMS.txt</td>
-            <td>Verify a download</td>
-            <td><a href="https://github.com/spiderocious/ibeji/releases/latest/download/SHA256SUMS.txt">View</a></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="rise install-notes">
+      <p>
+        That is the whole install, and the only path we test. It picks the
+        build for your chip, checks it against the published checksum, puts
+        the app in place, starts the daemon at login and links
+        <code>ibeji</code> onto your PATH.
+      </p>
+      <p>
+        It also avoids a trap. macOS quarantines anything a browser downloads,
+        so a hand-downloaded DMG opens onto <i>“Ìbejì is damaged”</i> and needs
+        an <code>xattr</code> command before it will run at all.
+        <code>curl</code> sets no such flag, so there is nothing to clear.
+      </p>
+      <p>
+        Every build, and the checksums for all of them, is on
+        <a href="https://github.com/spiderocious/ibeji/releases/latest">the releases page</a>
+        — to read, to verify, or to package Ìbejì yourself.
+      </p>
     </div>
-
-    <p class="shot-cap rise" style="margin-top:18px">
-      A DMG downloaded in a browser is quarantined by macOS and needs
-      <code>xattr -dr com.apple.quarantine /Applications/Ibeji.app</code> once
-      after installing. The curl command above avoids that entirely, because
-      curl does not set the quarantine flag.
-    </p>
   </div>
 </section>
 
