@@ -56,7 +56,7 @@
   "applicationCategory": "DeveloperApplication",
   "applicationSubCategory": "Developer Tools",
   "operatingSystem": "macOS 12 or later",
-  "softwareVersion": "0.1.6",
+  "softwareVersion": "0.1.7",
   "url": "https://ibeji.devferanmi.xyz/",
   "downloadUrl": "https://ibeji.devferanmi.xyz/#install",
   "installUrl": "https://ibeji.devferanmi.xyz/#install",
@@ -199,7 +199,7 @@
       "name": "Is it finished?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. It is v0.1.6 and it is young — the version number is honest about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP server all work, and every release is tested by pairing two machines and running the whole flow. Expect rough edges, and expect them to be fixed in the open."
+        "text": "No. It is v0.1.7 and it is young — the version number is honest about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP server all work, and every release is tested by pairing two machines and running the whole flow. Expect rough edges, and expect them to be fixed in the open."
       }
     },
     {
@@ -242,7 +242,7 @@
 <!-- ------------------------------------------------------------- hero -- -->
 <section class="hero">
   <div class="wrap">
-    <span class="badge"><span class="dot"></span> v0.1.6 · macOS · free &amp; open source</span>
+    <span class="badge"><span class="dot"></span> v0.1.7 · macOS · free &amp; open source</span>
 
     <h1>Two Macs, working as one pair.</h1>
 
@@ -359,6 +359,16 @@
         <p>Commands run in your real login shell, so nvm, pnpm, homebrew and
         git's credential helper are all on PATH. Output streams back live and
         the exit code is the one you'd have got standing at the machine.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3"/><path d="M13 15h4"/></svg></div>
+        <h3>A shell that remembers</h3>
+        <p>Type into your other Mac from the window. <code>cd</code> and
+        <code>export</code> stay put between commands, long output streams as
+        it happens, and Ctrl-C stops what is running. Open as many as you
+        like. Not a full terminal — no <code>vim</code>, no
+        <code>top</code>.</p>
       </article>
 
       <article class="feat rise">
@@ -542,6 +552,16 @@
         </div>
         <p class="shot-cap"><b>Spaces.</b> A folder on both disks, its role, and
         whether it has caught up.</p>
+      </div>
+
+      <div class="rise">
+        <div class="shot-frame">
+          <div class="shot-bar"><i></i><i></i><i></i><span class="ttl">Shell</span></div>
+          <img src="shots/shell.png" width="1960" height="1360" loading="lazy" decoding="async"
+               alt="The Shell tab with two sub-tabs, sh-001 and sh-002, a plus button to open another, Stop and Close actions, and a dark terminal pane with a prompt and the working directory along the bottom." />
+        </div>
+        <p class="shot-cap"><b>Shell.</b> A real shell on the other machine,
+        one per sub-tab. It remembers where it is between commands.</p>
       </div>
 
       <div class="rise">
@@ -905,7 +925,7 @@ Notes:
       <details class="qa">
         <summary>Is it finished?</summary>
         <div class="qa-body">
-          <p>No. It is v0.1.6 and it is young — the version number is honest
+          <p>No. It is v0.1.7 and it is young — the version number is honest
           about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP
           server all work, and every release is tested by pairing two machines
           and running the whole flow. Expect rough edges, and expect them to be
