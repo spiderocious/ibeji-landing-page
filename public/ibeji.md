@@ -9,7 +9,7 @@ This file is the agent-facing version of <https://ibeji.devferanmi.xyz>. It is t
 read if you are an AI agent installing, operating or debugging Ìbejì.
 
 - Source: <https://github.com/spiderocious/ibeji>
-- Current version: **v0.1.3**
+- Current version: **v0.1.5**
 - Platform: **macOS only** (both machines)
 - Network: **LAN only** — no accounts, no cloud, no relay, no internet traffic
 
@@ -62,7 +62,21 @@ paired" is expected and not an error.
 ## Pairing — a human has to do this
 
 Pairing requires someone to compare six digits on two screens at once. **Do not
-attempt to automate it.** Tell the user to:
+attempt to automate it**: the comparison is what proves no machine in the middle
+substituted its own key.
+
+From the terminal (v0.1.5 and later), on the first Mac:
+
+```sh
+ibeji pair                      # what is on the LAN, and this Mac's address
+ibeji pair 192.168.1.39:7749    # start a ceremony; prints the six digits
+```
+
+The other Mac raises its own ceremony in response — check it with
+`ibeji pair status` there. Once a human confirms the digits match, run
+`ibeji pair confirm` on **both** machines. `ibeji pair cancel` abandons it.
+
+Or through the window:
 
 1. Open Ìbejì on both Macs.
 2. Wait for each to appear in the other's list, or press **Add by IP address**
@@ -101,6 +115,16 @@ at that machine — say so rather than retrying in a loop.
 
 A human can remember a rule for one exact command in one working directory from
 one device, after which matching calls run without prompting.
+
+Both sides of this are on the CLI:
+
+```sh
+ibeji prompts                           # what is waiting for approval here
+ibeji prompts allow <id> [--remember]
+ibeji prompts deny <id>
+ibeji rules                             # remembered rules, and how often each fired
+ibeji rules revoke <id>
+```
 
 ---
 
@@ -199,6 +223,22 @@ Guidance for agents:
 ---
 
 ## Shared spaces
+
+Create one on each machine, naming which side is master:
+
+```sh
+# on the machine that owns the git credentials
+ibeji spaces create atlas ~/projects/atlas --role master
+# on the other one
+ibeji spaces create atlas ~/projects/atlas --role replica
+
+ibeji spaces                    # list them, with sync state and conflicts
+ibeji spaces wait atlas         # block until it converges
+ibeji spaces pause|resume|leave|delete atlas
+```
+
+`--mode mirror` makes it one-way, master to replica only.
+
 
 A space is a named folder present on both machines as **real files on disk**,
 not a network mount.
