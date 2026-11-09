@@ -56,7 +56,7 @@
   "applicationCategory": "DeveloperApplication",
   "applicationSubCategory": "Developer Tools",
   "operatingSystem": "macOS 12 or later",
-  "softwareVersion": "0.1.7",
+  "softwareVersion": "0.1.8",
   "url": "https://ibeji.devferanmi.xyz/",
   "downloadUrl": "https://ibeji.devferanmi.xyz/#install",
   "installUrl": "https://ibeji.devferanmi.xyz/#install",
@@ -167,7 +167,15 @@
       "name": "The two Macs cannot find each other.",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Multicast is often blocked on corporate and guest Wi-Fi, which is what mDNS discovery needs. The window shows this Mac's own address for exactly this reason: read it off one screen, press Add by IP address on the other, and type it in. Manual entry is a first-class path, not a fallback. Both daemons listen on TCP port 7749. Check they are both running with ibeji doctor."
+        "text": "Run ibeji doctor first. The most common cause is macOS blocking local network access, and that denial is silent: every connection to a machine on your network fails with no route to host — the same error you would get if it were switched off — while the internet carries on working. Since v0.1.8 doctor says so outright and names the fix. Both Macs need v0.1.8 or later: before it, macOS never even showed the prompt. Failing that, multicast is often blocked on corporate and guest Wi-Fi, which is what automatic discovery needs. The window shows this Mac's own address for exactly that reason: read it off one screen, press Add by IP address on the other, and type it in. Manual entry is a first-class path, not a fallback. Both daemons listen on TCP port 7749."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My other Mac changed address. Do I have to pair again?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A machine that picked up a new IP has not become untrustworthy, so there is no reason to compare six digits again. Press Reconnect on the device, or run ibeji reconnect 192.168.1.42:7749. It dials the new address and checks the key you already trust. If a different machine answers there it refuses, and that refusal is the point — pair again only when the key itself changed, which means the machine was replaced or reinstalled. Recent addresses are remembered and retried, so a laptop moving between Wi-Fi and Ethernet is usually found without being told."
       }
     },
     {
@@ -199,7 +207,7 @@
       "name": "Is it finished?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. It is v0.1.7 and it is young — the version number is honest about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP server all work, and every release is tested by pairing two machines and running the whole flow. Expect rough edges, and expect them to be fixed in the open."
+        "text": "No. It is v0.1.8 and it is young — the version number is honest about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP server all work, and every release is tested by pairing two machines and running the whole flow. Expect rough edges, and expect them to be fixed in the open."
       }
     },
     {
@@ -242,7 +250,7 @@
 <!-- ------------------------------------------------------------- hero -- -->
 <section class="hero">
   <div class="wrap">
-    <span class="badge"><span class="dot"></span> v0.1.7 · macOS · free &amp; open source</span>
+    <span class="badge"><span class="dot"></span> v0.1.8 · macOS · free &amp; open source</span>
 
     <h1>Two Macs, working as one pair.</h1>
 
@@ -410,6 +418,15 @@
         one of them works from <code>ibeji</code> as well as the window, so a
         headless Mac or an agent is never stuck waiting for someone to click
         something.</p>
+      </article>
+
+      <article class="feat rise">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+        <h3>Both machines, one screen</h3>
+        <p>A Health tab showing each Mac's name, version, address and whether
+        it is reachable right now — with the daemon's own log underneath,
+        copyable. Finding out why the far end is quiet should not mean walking
+        over to it.</p>
       </article>
 
       <article class="feat rise">
@@ -882,13 +899,35 @@ Notes:
       <details class="qa">
         <summary>The two Macs cannot find each other.</summary>
         <div class="qa-body">
-          <p>Multicast is often blocked on corporate and guest Wi-Fi, which is
-          what mDNS discovery needs. The window shows this Mac's own address for
-          exactly this reason: read it off one screen, press <b>Add by IP
-          address</b> on the other, and type it in. Manual entry is a first-class
-          path, not a fallback.</p>
-          <p>Both daemons listen on TCP port 7749. Check they are both running
-          with <code>ibeji doctor</code>.</p>
+          <p><b>Run <code>ibeji doctor</code> first.</b> The most common cause
+          is macOS blocking local network access, and that denial is silent:
+          every connection to a machine on your network fails with <i>no route
+          to host</i> — the same error you would get if it were switched off —
+          while the internet carries on working. Since v0.1.8 doctor says so
+          outright and names the fix. Both Macs need v0.1.8 or later: before
+          it, macOS never even showed the prompt.</p>
+          <p>Failing that, multicast is often blocked on corporate and guest
+          Wi-Fi, which is what automatic discovery needs. The window shows this
+          Mac's own address for exactly that reason: read it off one screen,
+          press <b>Add by IP address</b> on the other, and type it in. Manual
+          entry is a first-class path, not a fallback.</p>
+          <p>Both daemons listen on TCP port 7749.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>My other Mac changed address. Do I have to pair again?</summary>
+        <div class="qa-body">
+          <p>No. A machine that picked up a new IP has not become
+          untrustworthy, so there is no reason to compare six digits again.
+          Press <b>Reconnect</b> on the device, or run
+          <code>ibeji reconnect 192.168.1.42:7749</code>.</p>
+          <p>It dials the new address and checks the key you already trust. If
+          a different machine answers there it refuses, and that refusal is the
+          point — pair again only when the key itself changed, which means the
+          machine was replaced or reinstalled. Recent addresses are remembered
+          and retried, so a laptop moving between Wi-Fi and Ethernet is usually
+          found without being told.</p>
         </div>
       </details>
 
@@ -925,7 +964,7 @@ Notes:
       <details class="qa">
         <summary>Is it finished?</summary>
         <div class="qa-body">
-          <p>No. It is v0.1.7 and it is young — the version number is honest
+          <p>No. It is v0.1.8 and it is young — the version number is honest
           about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP
           server all work, and every release is tested by pairing two machines
           and running the whole flow. Expect rough edges, and expect them to be

@@ -9,7 +9,7 @@ This file is the agent-facing version of <https://ibeji.devferanmi.xyz>. It is t
 read if you are an AI agent installing, operating or debugging Ìbejì.
 
 - Source: <https://github.com/spiderocious/ibeji>
-- Current version: **v0.1.7**
+- Current version: **v0.1.8**
 - Platform: **macOS only** (both machines)
 - Network: **LAN only** — no accounts, no cloud, no relay, no internet traffic
 
@@ -65,7 +65,7 @@ Pairing requires someone to compare six digits on two screens at once. **Do not
 attempt to automate it**: the comparison is what proves no machine in the middle
 substituted its own key.
 
-From the terminal (v0.1.7 and later), on the first Mac:
+From the terminal (v0.1.8 and later), on the first Mac:
 
 ```sh
 ibeji pair                      # what is on the LAN, and this Mac's address
@@ -224,7 +224,7 @@ Guidance for agents:
 
 ## A shell on the other machine
 
-Since v0.1.7 the window has a Shell tab, and the daemon exposes it:
+Since v0.1.8 the window has a Shell tab, and the daemon exposes it:
 
 ```
 GET  /v1/shells                 the shells open on the paired device
@@ -333,18 +333,79 @@ Linux (launchd, keychain, zsh login shell), and anything over the internet.
 
 ---
 
+## If the two Macs cannot see each other
+
+**Check this first.** macOS requires permission for an app to reach devices
+on the local network, and a denial is silent: every LAN connection returns
+`connect: no route to host` — the same error an absent machine gives — while
+the internet keeps working.
+
+```sh
+ibeji doctor
+```
+
+Since v0.1.8 this names it outright, and the daemon logs the same check at
+startup:
+
+```
+✗ Local network  macOS is blocking Ìbejì from this network
+                 (the internet works, but the router at 192.168.1.1 does not answer)
+```
+
+The fix is to allow Ìbejì under System Settings → Privacy & Security → Local
+Network. **Both machines need v0.1.8 or later**: before it, the daemon had a
+per-build signing identity and no link to the app bundle, so macOS never
+prompted and the permission could not be granted at all.
+
+Do not advise unpairing to work around this. Unpairing discards the pinned
+keys and solves nothing — a network problem is not a trust problem.
+
+## A peer that moved
+
+A changed address is not a trust event, so it does not need a new ceremony:
+
+```sh
+ibeji reconnect 192.168.1.147:7749
+```
+
+This dials the new address and verifies the key already pinned. A different
+machine there is refused, and that refusal is correct — re-pair only when the
+key genuinely changed, which means the machine was replaced or reinstalled.
+
+Recent addresses are remembered and retried automatically, so a peer that
+moves between Wi-Fi and Ethernet is usually found without being told.
+
+## Health
+
+```sh
+curl -s -H "Authorization: Bearer $TOKEN" "$ENDPOINT/v1/health"
+```
+
+Both machines in one call: names, versions, addresses, whether each is
+reachable right now, and this machine's doctor checks. Useful when the
+question is "is the far end alive, and if not why" and walking to it is not
+an option.
+
+```sh
+curl -s -H "Authorization: Bearer $TOKEN" "$ENDPOINT/v1/logs?limit=200&q=pair"
+```
+
+The tail of the daemon's log, optionally filtered. Pairing logs each step, so
+a failure says whether the machine was unreachable, refused the connection,
+or answered as somebody else.
+
 ## Debugging, in order
 
 1. `ibeji doctor` — six checks; each failure names its own fix.
 2. `ibeji trace --errors --since 30m` — the failures with their payloads and,
-   since v0.1.7, the underlying cause rather than just the mapped code. A
+   since v0.1.8, the underlying cause rather than just the mapped code. A
    `peer_offline` now carries the reason it could not connect — a refused
    dial, a timeout and a failed TLS handshake look different and need
    different answers.
 3. `ibeji devices` — is the peer `live` or `unreachable`?
 4. `ibeji check <device> <url>` — whose network is actually broken?
 
-The daemon log carries the cause of every failed API call since v0.1.7:
+The daemon log carries the cause of every failed API call since v0.1.8:
 
 ```
 WARN api: request failed route="POST /v1/pair/start" code=peer_offline
@@ -366,7 +427,9 @@ Common states:
 | `timed_out` on exec | Nobody answered the prompt within 60s on the far machine |
 | `declined` on exec | A human declined it; do not retry silently |
 | Device shows `unreachable` | Peer asleep, off the LAN, or daemon stopped |
-| Paired yesterday, unpaired today | Pre-v0.1.7: the pin was never written to disk. Update both Macs and pair once more |
+| Every LAN dial says `no route to host` while the internet works | macOS is blocking local network access. Run `ibeji doctor`; both Macs need v0.1.8+ |
+| The peer moved and cannot be found | `ibeji reconnect <address>` — keys stay pinned, no re-pairing |
+| Paired yesterday, unpaired today | Pre-v0.1.8: the pin was never written to disk. Update both Macs and pair once more |
 | `no route to host` in the cause | Stale route, usually after the peer changed address or the Wi-Fi reassociated |
 | "Ibeji is damaged" | Quarantined download; see the `xattr` command above |
 | Key mismatch | The peer's identity changed — the pair must be re-made by a human |
