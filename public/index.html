@@ -56,7 +56,7 @@
   "applicationCategory": "DeveloperApplication",
   "applicationSubCategory": "Developer Tools",
   "operatingSystem": "macOS 12 or later",
-  "softwareVersion": "0.1.8",
+  "softwareVersion": "0.1.9",
   "url": "https://ibeji.devferanmi.xyz/",
   "downloadUrl": "https://ibeji.devferanmi.xyz/#install",
   "installUrl": "https://ibeji.devferanmi.xyz/#install",
@@ -167,7 +167,15 @@
       "name": "The two Macs cannot find each other.",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Run ibeji doctor first. The most common cause is macOS blocking local network access, and that denial is silent: every connection to a machine on your network fails with no route to host — the same error you would get if it were switched off — while the internet carries on working. Since v0.1.8 doctor says so outright and names the fix. Both Macs need v0.1.8 or later: before it, macOS never even showed the prompt. Failing that, multicast is often blocked on corporate and guest Wi-Fi, which is what automatic discovery needs. The window shows this Mac's own address for exactly that reason: read it off one screen, press Add by IP address on the other, and type it in. Manual entry is a first-class path, not a fallback. Both daemons listen on TCP port 7749."
+        "text": "Run ibeji doctor first. The most common cause is macOS blocking local network access, and that denial is silent: every connection to a machine on your network fails with no route to host — the same error you would get if it were switched off — while the internet carries on working. Since v0.1.9 doctor says so outright and names the fix. Both Macs need v0.1.8 or later: before it, macOS never even showed the prompt. Failing that, multicast is often blocked on corporate and guest Wi-Fi, which is what automatic discovery needs. The window shows this Mac's own address for exactly that reason: read it off one screen, press Add by IP address on the other, and type it in. Manual entry is a first-class path, not a fallback. Both daemons listen on TCP port 7749."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "After updating, the two Macs stopped seeing each other.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "macOS ties permission to reach your local network to an app's exact contents, and those change with every version. Ìbejì is signed ad-hoc — there is no certificate for the permission to follow — so each update looks like a new app and the permission does not carry over. The denial is silent: every connection to your other Mac fails with no route to host while the internet keeps working. Open System Settings → Privacy & Security → Local Network and switch Ìbejì on. Expect a new entry in that list rather than the old one turning itself back on. ibeji doctor detects this and says so, and the installer tells you while you are still looking at it. A paid Apple Developer certificate would remove the chore; until then it is a toggle after each update."
       }
     },
     {
@@ -207,7 +215,7 @@
       "name": "Is it finished?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. It is v0.1.8 and it is young — the version number is honest about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP server all work, and every release is tested by pairing two machines and running the whole flow. Expect rough edges, and expect them to be fixed in the open."
+        "text": "No. It is v0.1.9 and it is young — the version number is honest about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP server all work, and every release is tested by pairing two machines and running the whole flow. Expect rough edges, and expect them to be fixed in the open."
       }
     },
     {
@@ -250,7 +258,7 @@
 <!-- ------------------------------------------------------------- hero -- -->
 <section class="hero">
   <div class="wrap">
-    <span class="badge"><span class="dot"></span> v0.1.8 · macOS · free &amp; open source</span>
+    <span class="badge"><span class="dot"></span> v0.1.9 · macOS · free &amp; open source</span>
 
     <h1>Two Macs, working as one pair.</h1>
 
@@ -903,7 +911,7 @@ Notes:
           is macOS blocking local network access, and that denial is silent:
           every connection to a machine on your network fails with <i>no route
           to host</i> — the same error you would get if it were switched off —
-          while the internet carries on working. Since v0.1.8 doctor says so
+          while the internet carries on working. Since v0.1.9 doctor says so
           outright and names the fix. Both Macs need v0.1.8 or later: before
           it, macOS never even showed the prompt.</p>
           <p>Failing that, multicast is often blocked on corporate and guest
@@ -912,6 +920,25 @@ Notes:
           press <b>Add by IP address</b> on the other, and type it in. Manual
           entry is a first-class path, not a fallback.</p>
           <p>Both daemons listen on TCP port 7749.</p>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>After updating, the two Macs stopped seeing each other.</summary>
+        <div class="qa-body">
+          <p>macOS ties permission to reach your local network to an app's
+          exact contents, and those change with every version. Ìbejì is signed
+          ad-hoc — there is no certificate for the permission to follow — so
+          each update looks like a new app and the permission does not carry
+          over. The denial is silent: every connection to your other Mac fails
+          with <i>no route to host</i> while the internet keeps working.</p>
+          <p><b>Open System Settings → Privacy &amp; Security → Local Network
+          and switch Ìbejì on.</b> Expect a new entry in that list rather than
+          the old one turning itself back on.</p>
+          <p><code>ibeji doctor</code> detects this and says so, and the
+          installer tells you while you are still looking at it. A paid Apple
+          Developer certificate would remove the chore; until then it is a
+          toggle after each update.</p>
         </div>
       </details>
 
@@ -964,7 +991,7 @@ Notes:
       <details class="qa">
         <summary>Is it finished?</summary>
         <div class="qa-body">
-          <p>No. It is v0.1.8 and it is young — the version number is honest
+          <p>No. It is v0.1.9 and it is young — the version number is honest
           about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP
           server all work, and every release is tested by pairing two machines
           and running the whole flow. Expect rough edges, and expect them to be
