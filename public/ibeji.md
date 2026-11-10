@@ -9,7 +9,7 @@ This file is the agent-facing version of <https://ibeji.devferanmi.xyz>. It is t
 read if you are an AI agent installing, operating or debugging Ìbejì.
 
 - Source: <https://github.com/spiderocious/ibeji>
-- Current version: **v0.1.11**
+- Current version: **v0.1.12**
 - Platform: **macOS only** (both machines)
 - Network: **LAN only** — no accounts, no cloud, no relay, no internet traffic
 
