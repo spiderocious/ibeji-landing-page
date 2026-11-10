@@ -9,7 +9,7 @@ This file is the agent-facing version of <https://ibeji.devferanmi.xyz>. It is t
 read if you are an AI agent installing, operating or debugging Ìbejì.
 
 - Source: <https://github.com/spiderocious/ibeji>
-- Current version: **v0.1.9**
+- Current version: **v0.1.10**
 - Platform: **macOS only** (both machines)
 - Network: **LAN only** — no accounts, no cloud, no relay, no internet traffic
 
@@ -379,6 +379,42 @@ This dials the new address and verifies the key already pinned. A different
 machine there is refused, and that refusal is correct — re-pair only when the
 key genuinely changed, which means the machine was replaced or reinstalled.
 
+**If you do not know the new address**, do not guess and do not ask the human
+to go and find it. A DHCP lease expires, a router reboots, a network changes
+subnets, and the address you have becomes one that nothing answers — which
+reports as `the paired device is not reachable`, the same words you get for a
+machine that is switched off. The two are indistinguishable from this side.
+
+Sweep for it instead:
+
+```sh
+ibeji sweep
+```
+
+```
+SUBNET           PORT  SCANNED  TOOK
+192.168.1.35/24  7749  254      1.6s
+
+NAME                            ADDRESS            NOTE
+MONB-1375-LP                    192.168.1.39:7749
+Oluwaferanmis-MacBook-Pro-4270  192.168.1.35:7749  this Mac
+
+MONB-1375-LP is listening at 192.168.1.39:7749. That is almost certainly your
+other Mac — pair with it.
+
+  already paired:  ibeji reconnect 192.168.1.39:7749
+  not yet paired:  ibeji pair 192.168.1.39:7749
+```
+
+It probes the /24 around this machine for daemons on the Ìbejì port, names
+what answers, and prints the command to run next. It is
+bounded on purpose — one subnet, one port, a couple of seconds — and it
+trusts nothing it finds: a machine answering on 7749 is a candidate, and the
+pinned key still has to match.
+
+The same sweep is a button in the window, offered automatically whenever a
+pairing attempt times out.
+
 Recent addresses are remembered and retried automatically, so a peer that
 moves between Wi-Fi and Ethernet is usually found without being told.
 
@@ -435,7 +471,9 @@ Common states:
 | `declined` on exec | A human declined it; do not retry silently |
 | Device shows `unreachable` | Peer asleep, off the LAN, or daemon stopped |
 | Every LAN dial says `no route to host` while the internet works | macOS is blocking local network access. Run `ibeji doctor`; both Macs need v0.1.8+, and the toggle repeats on each update |
-| The peer moved and cannot be found | `ibeji reconnect <address>` — keys stay pinned, no re-pairing |
+| The peer moved and the address is known | `ibeji reconnect <address>` — keys stay pinned, no re-pairing |
+| The peer moved and the address is not known | `ibeji sweep` names every daemon on this subnet; then `ibeji reconnect` |
+| `not reachable` with both Macs plainly on | Check the address first. A new DHCP lease or a subnet change makes the old one dead, and it reports identically to a machine that is off |
 | Paired yesterday, unpaired today | Pre-v0.1.9: the pin was never written to disk. Update both Macs and pair once more |
 | `no route to host` in the cause | Stale route, usually after the peer changed address or the Wi-Fi reassociated |
 | "Ibeji is damaged" | Quarantined download; see the `xattr` command above |

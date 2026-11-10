@@ -56,7 +56,7 @@
   "applicationCategory": "DeveloperApplication",
   "applicationSubCategory": "Developer Tools",
   "operatingSystem": "macOS 12 or later",
-  "softwareVersion": "0.1.9",
+  "softwareVersion": "0.1.10",
   "url": "https://ibeji.devferanmi.xyz/",
   "downloadUrl": "https://ibeji.devferanmi.xyz/#install",
   "installUrl": "https://ibeji.devferanmi.xyz/#install",
@@ -172,6 +172,14 @@
     },
     {
       "@type": "Question",
+      "name": "It says the paired device is not reachable, but both Macs are on.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check the address before anything else. A router hands out addresses on a lease, so a restart or an overnight renewal can move the other Mac, and if the network itself changed subnets every address it knew is wrong. Nothing answers, which from this side looks exactly like the machine being switched off. Since v0.1.10 clicking Pair opens a timeline of the handshake and names the step that broke: a connection that goes unanswered says so, says an address change is the usual reason, and offers to scan your network — it finds the moved Mac by name in about two seconds. On the command line, ibeji reconnect does the same for a pair you already have, keeping the pinned key and changing only the address."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "After updating, the two Macs stopped seeing each other.",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -215,7 +223,7 @@
       "name": "Is it finished?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. It is v0.1.9 and it is young — the version number is honest about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP server all work, and every release is tested by pairing two machines and running the whole flow. Expect rough edges, and expect them to be fixed in the open."
+        "text": "No. It is v0.1.10 and it is young — the version number is honest about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP server all work, and every release is tested by pairing two machines and running the whole flow. Expect rough edges, and expect them to be fixed in the open."
       }
     },
     {
@@ -258,7 +266,7 @@
 <!-- ------------------------------------------------------------- hero -- -->
 <section class="hero">
   <div class="wrap">
-    <span class="badge"><span class="dot"></span> v0.1.9 · macOS · free &amp; open source</span>
+    <span class="badge"><span class="dot"></span> v0.1.10 · macOS · free &amp; open source</span>
 
     <h1>Two Macs, working as one pair.</h1>
 
@@ -924,6 +932,28 @@ Notes:
       </details>
 
       <details class="qa">
+        <summary>It says the paired device is not reachable, but both Macs are on.</summary>
+        <div class="qa-body">
+          <p>Check the address before anything else. A router hands out
+          addresses on a lease, so a restart or an overnight renewal can move
+          the other Mac — and if the network itself changed subnets, every
+          address it knew is now wrong. Nothing answers at the old one, which
+          from this side looks exactly like the machine being switched off.</p>
+          <p>Since v0.1.10 clicking <b>Pair</b> opens a timeline of the
+          handshake rather than a spinner, and names the step that broke. A
+          connection that goes unanswered says so, says an address change is
+          the usual reason, and offers to <b>scan your network</b> — which
+          finds the moved Mac by name in about two seconds. Every attempt
+          keeps its own log, with a Copy button, so what you send to anybody
+          else is the twenty lines about this pairing rather than the whole
+          daemon history.</p>
+          <p>On the command line, <code>ibeji reconnect</code> does the same
+          for a pair you already have: it keeps the pinned key and changes
+          only the address, because a machine moving is not a trust event.</p>
+        </div>
+      </details>
+
+      <details class="qa">
         <summary>After updating, the two Macs stopped seeing each other.</summary>
         <div class="qa-body">
           <p>macOS ties permission to reach your local network to an app's
@@ -991,7 +1021,7 @@ Notes:
       <details class="qa">
         <summary>Is it finished?</summary>
         <div class="qa-body">
-          <p>No. It is v0.1.9 and it is young — the version number is honest
+          <p>No. It is v0.1.10 and it is young — the version number is honest
           about that. Pairing, spaces, ports, exec, trace, the CLI and the MCP
           server all work, and every release is tested by pairing two machines
           and running the whole flow. Expect rough edges, and expect them to be
